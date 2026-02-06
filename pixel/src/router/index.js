@@ -1,8 +1,9 @@
 import HomeScreen from '@/views/homeScreen.vue'
+import JumpGame from '@/views/jumpGame.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 
-const router = createRouter({
+const routes = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
@@ -10,7 +11,12 @@ const router = createRouter({
       name:"home",
       component: HomeScreen,
     },
+    {
+      path:'/game',
+      name:"game",
+      component: JumpGame,
+    },
   ],
 })
 
-export default router
+export default routes
