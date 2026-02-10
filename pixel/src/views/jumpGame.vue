@@ -1,20 +1,25 @@
 <script setup>
+import { astro } from 'globals'
 import {ref} from 'vue'
 
 const score = ref(0)
 const hiScore = ref(0)
 
+const playing = ref(true)
 const jumped = ref(false)
-
-addEventListener('keydown', event =>{
-    event.preventDefault();
-    if(event.code === 'Space' || event.key === ' '){
-        jumped = true
-    }
-})
 
 const currentFrame = ref(run1)
 const running = ref(true)
+
+function start(){
+    addEventListener('keydown', event =>{
+        event.preventDefault();
+        if(event.code === 'Space' || event.key === ' '){
+            jumped = true
+        }
+    })
+
+}
 
 async function animation() {
     if (currentFrame === run1){
@@ -29,24 +34,47 @@ async function animation() {
     }
 }
 
+async function scoree() {
+    await delay(700);
+    score ++
+}
 
+async function spawnCone() {
+    await delay(2000 + Math.floor(Math.random()*3000))
+    document.querySelectorAll(".cone").style.left += 50px
+}
+
+
+///////////////////////////////////////////////////////////////////
+
+while(playing===true){
+    scoree();
+    animation();
+    cone();
+}
+
+if (playing===false){
+    if(score > hiScore){
+        hiScore = score
+    }
+    score = 0
+}
 
 </script>
 
 <template>
     <Transition name=""></Transition>
-    <div :class="cone"></div>
-    <div :class="{'jump': jumped}"></div>
+    <div ></div>
 </template>
 
 <style scoped>
-.cone {
-    transform: translateX(-100%);
-    transition: transform 2s;
+.cone{
+    left: -5%;
+    bottom: 20%;
+    width: 120px;
+    height: 120px;
 }
-.jump{
-    transform: translateY(100px);
-    transition: transform 0.5s;
-}
+
+.
 
 </style>
