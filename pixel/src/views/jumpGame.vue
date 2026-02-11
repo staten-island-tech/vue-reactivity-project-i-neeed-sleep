@@ -1,5 +1,9 @@
+<template>
+    <div class="bg">
+    </div>
+</template>
+
 <script setup>
-import { astro } from 'globals'
 import {ref} from 'vue'
 
 const score = ref(0)
@@ -41,11 +45,15 @@ async function scoree() {
 
 async function spawnCone() {
     await delay(2000 + Math.floor(Math.random()*3000))
-    document.querySelectorAll(".cone").style.left += 50px
+    document.querySelector(".bg").insertAdjacentHTML('beforeend', `
+        <div class = "cone"></div>
+    `)
 }
 
-
-///////////////////////////////////////////////////////////////////
+async function obstacle(){
+    document.querySelectorAll(".cone").style.transform = "translateX(-1%)";
+    await delay(50);
+}
 
 while(playing===true){
     scoree();
@@ -62,19 +70,18 @@ if (playing===false){
 
 </script>
 
-<template>
-    <Transition name=""></Transition>
-    <div ></div>
-</template>
-
 <style scoped>
 .cone{
     left: -5%;
     bottom: 20%;
-    width: 120px;
-    height: 120px;
+    width: 2%;
 }
-
-.
-
+.outFocus{
+    background-color: black;
+    opacity: 25%;
+}
+.bg{
+    background-image: url('pixel/public/bgArt.png');
+    width: 100%;
+}
 </style>
