@@ -1,10 +1,24 @@
 <template>
-    <div class="bg">
+    <div :class="bg">
+    </div>
+    <div :class="outFocus" v-if = playing>
+        <button @click="menu" :class="leave" ></button>
     </div>
 </template>
 
 <script setup>
 import {ref} from 'vue'
+
+const bgStuff = [{
+    name: 'city',
+    img: './public/bgArt.png'
+},{
+    name: 'plains',
+    img: './public/bgArt1.png'
+},{
+    name: 'void',
+    img: './public/bgArt2.png'
+}]
 
 const score = ref(0)
 const hiScore = ref(0)
@@ -24,18 +38,19 @@ function start(){
     })
 
 }
+function menu(){
+
+}
 
 async function animation() {
-    if (currentFrame === run1){
-        currentImage.value = run2;
-        await delay(500);
-    }if (currentFrame === run2){
-        currentImage.value = run3;
-        await delay(250);
-    }else{
-        currentImage.value = run1;
-        await delay(500);
-    }
+    currentImage.value = run1;
+    await delay(500);
+    currentImage.value = run2;
+    await delay(250);
+    currentImage.value = run3;
+    await delay(500);
+    currentImage.value = run2;
+    await delay(250);
 }
 
 async function scoree() {
@@ -77,11 +92,11 @@ if (playing===false){
     width: 2%;
 }
 .outFocus{
-    background-color: black;
+    background-color: #000000;
     opacity: 25%;
 }
 .bg{
-    background-image: url('pixel/public/bgArt.png');
+    background-image: url('./public/bgArt.png');
     width: 100%;
 }
 </style>

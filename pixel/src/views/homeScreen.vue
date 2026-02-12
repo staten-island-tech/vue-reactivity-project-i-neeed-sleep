@@ -4,7 +4,7 @@
 
 <template>
     <h1>Run For It</h1>
-    <RouterLink to="/game"><button><img src="./pixel/public/startbtn.png"></button></RouterLink>
+    <RouterLink to="/game"><button><img src="./public/startbtn.png"></button></RouterLink>
 </template>
 
 <style scoped>
