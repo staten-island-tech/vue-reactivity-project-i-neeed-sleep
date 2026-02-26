@@ -1,7 +1,7 @@
 <template>
-    <div :class="bg">
-    </div>
-    <div :class="outFocus" v-if = playing>
+    <div :class="bg"></div>
+    <div v-if=playing></div>
+    <div :class="outFocus" @keydown="">
         <button @click="menu" :class="leave" ></button>
     </div>
 </template>
@@ -9,15 +9,15 @@
 <script setup>
 import {ref} from 'vue'
 
-const bgStuff = [{
+const bg = [{
     name: 'city',
-    img: './public/bgArt.png'
+    img: '@/assets/bgArt.png'
 },{
-    name: 'plains',
-    img: './public/bgArt1.png'
+    name: 'standby',
+    img: '@/assets/bgArt2.png'
 },{
     name: 'void',
-    img: './public/bgArt2.png'
+    img: '@/assets/bgArt1.png'
 }]
 
 const score = ref(0)
@@ -36,9 +36,6 @@ function start(){
             jumped = true
         }
     })
-
-}
-function menu(){
 
 }
 
@@ -91,12 +88,12 @@ if (playing===false){
     bottom: 20%;
     width: 2%;
 }
-.outFocus{
+.pauseFocus{
     background-color: #000000;
     opacity: 25%;
 }
 .bg{
-    background-image: url('./public/bgArt.png');
     width: 100%;
+    height: 56.25%;
 }
 </style>

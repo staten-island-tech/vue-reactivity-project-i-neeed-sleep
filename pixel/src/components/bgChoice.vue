@@ -23,16 +23,17 @@ div{
     align-items: center;
     height: 200px;
     width: 150px;
-    color: #462255;
+    color: #372549;
+    border: none;
     opacity: 60%;
 }
 h2{
     font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
+    font-weight: 150;
     font-style: normal;
     text-align: center;
     font-size: 80px;
-    color: #ffffff;
+    color: #EACDC2;
 }
 img{
     width:100%;
