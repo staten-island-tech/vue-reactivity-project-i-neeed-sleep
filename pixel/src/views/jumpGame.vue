@@ -1,15 +1,21 @@
 <template>
-    <div :class="bg"></div>
-    <div v-if=playing></div>
-    <div :class="outFocus" @keydown="">
-        <button @click="menu" :class="leave" ></button>
+    <div :class="bg">
+        <div :class="player">
+            
+        </div>
+        <div :class="cone"></div>
+        <div :class="outFocus" @keydown.esc="">
+            <div> <bgChoice v-for="bg in bgs" :key="bg.name" :animal="bg.img"></div>
+        </div>
     </div>
 </template>
 
 <script setup>
 import {ref} from 'vue'
+import pauseGame from '@/components/pauseGame.vue'
+import bgChoice from '@/components/bgChoice.vue'
 
-const bg = [{
+const bgs = [{
     name: 'city',
     img: '@/assets/bgArt.png'
 },{
@@ -24,7 +30,7 @@ const score = ref(0)
 const hiScore = ref(0)
 
 const playing = ref(true)
-const jumped = ref(false)
+const jumping = ref(false)
 
 const currentFrame = ref(run1)
 const running = ref(true)
@@ -33,7 +39,17 @@ function start(){
     addEventListener('keydown', event =>{
         event.preventDefault();
         if(event.code === 'Space' || event.key === ' '){
-            jumped = true
+            jumping = true
+            for(let i = 5; i <= 5; i++){
+                document.querySelectorAll(".player").style.transform = "translateY(1%)";
+                await delay(25);
+            } 
+            for(let i = 5; i <= 5; i++){
+                document.querySelectorAll(".player").style.transform = "translateY(-1%)";
+                await delay(25);
+            }
+            jumping = false 
+
         }
     })
 
@@ -56,21 +72,23 @@ async function scoree() {
 }
 
 async function spawnCone() {
-    await delay(2000 + Math.floor(Math.random()*3000))
+    await delay(2000 + Math.floor(Math.random()*2000))
     document.querySelector(".bg").insertAdjacentHTML('beforeend', `
-        <div class = "cone"></div>
+        <div :class = "cone"></div>
     `)
 }
 
 async function obstacle(){
     document.querySelectorAll(".cone").style.transform = "translateX(-1%)";
-    await delay(50);
+    await delay(25);
 }
 
 while(playing===true){
     scoree();
-    animation();
     cone();
+    if(jumping=false){
+        animation();
+    }
 }
 
 if (playing===false){
@@ -80,11 +98,13 @@ if (playing===false){
     score = 0
 }
 
+
+
 </script>
 
 <style scoped>
 .cone{
-    left: -5%;
+    right: -5%;
     bottom: 20%;
     width: 2%;
 }
@@ -95,5 +115,7 @@ if (playing===false){
 .bg{
     width: 100%;
     height: 56.25%;
+    image-rendering: pixelated;
+    background-image: url("@/assets/bgArt.png");
 }
 </style>

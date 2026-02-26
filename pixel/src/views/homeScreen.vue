@@ -4,9 +4,6 @@
 
 <template>
     <div>
-        <div>
-            <img src="@/assets/bgArt.png">
-        </div>
         <h1>Run For It</h1>
         <RouterLink to="/game"><button> Start </button></RouterLink>
         <br>
@@ -35,8 +32,12 @@ button{
     border: none;
     background-color: #1A1423;
 }
-img{
+div{
+    background-image: url("@/assets/bgArt.png");
+    background-size: cover;
+    image-rendering:pixelated;
     width:100%;
+    height:56.25%;
     align-self: center;
 }
 </style>
