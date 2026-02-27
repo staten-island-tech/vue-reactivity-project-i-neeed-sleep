@@ -31,6 +31,8 @@ button{
     color: #FFC15E;
     border: none;
     background-color: #1A1423;
+    position: static;
+    align-self: center;
 }
 div{
     background-image: url("@/assets/bgArt.png");

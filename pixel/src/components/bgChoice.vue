@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img src="{{ bg.img }}">
+        <img :src="`{{ bg.img }}`">
         <h2>{{ bg.name }}</h2>
     </div>
 </template>
