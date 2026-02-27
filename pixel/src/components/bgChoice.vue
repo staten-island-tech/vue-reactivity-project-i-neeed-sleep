@@ -2,19 +2,11 @@
     <div>
         <img :src="bg.img">
         <h2>{{ bg.name }}</h2>
-        <button @click="c">change</button>
+        <slot></slot>
     </div>
 </template>
 
 <script setup>
-import {defineEmits} from 'vue'
-
-const emit = defineEmits([ee])
-
-const c = () =>{
-    const new = bg.img;
-    emit('ee',new);
-}
     defineProps({
         bg:{
             type: Object,
@@ -34,7 +26,7 @@ div{
 }
 h2{
     font-family: "Jersey 10", sans-serif;
-    font-weight: 40px;
+    font-weight: 20px;
     font-style: normal;
     text-align: center;
     font-size: 60px;

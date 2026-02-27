@@ -3,8 +3,10 @@
     <br><br>
     <button @click="choosing=true">Change Background</button>
     <br><br>
-    <div @click="">
-        <div v-if="choosing"> <bgChoice v-for="bg in bgs" :key="bg.name" :bg="bg">{{ bg.name }}</bgChoice></div>
+    <div v-if="choosing"> 
+        <bgChoice @click="cc(bg)" v-for="bg in bgs" :key="bg.img" :bg="bg">
+            <button>e</button>
+        </bgChoice>
     </div>
 </div>
 
@@ -15,7 +17,11 @@ import {ref} from 'vue'
 import bgChoice from '@/components/bgChoice.vue'
 const choosing = ref(false)
 const c = ref('./src/assets/bgArt.png')
-const cc =()
+
+function cc(bg){
+    c = bg;
+}
+
 const bgs = ref([{
     name: 'city',
     img: './src/assets/bgArt.png'
