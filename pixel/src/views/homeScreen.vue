@@ -36,7 +36,7 @@ button{
 }
 div{
     background-image: url("@/assets/bgArt.png");
-    background-size: cover;
+    background-size:cover;
     image-rendering:pixelated;
     width:100%;
     height:56.25%;

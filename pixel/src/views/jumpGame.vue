@@ -1,10 +1,10 @@
 <template>
     <div class="bg">
-        <div class="player">
+        <div class="player" @keydown.space=jump>
             
         </div>
         <div class="cone"></div>
-        <div class="outFocus" @keydown.esc="pauseGame = true" v-if="pauseGame">
+        <div @keydown.esc="pauseGame = true" v-if="pauseGame">
 
             <button @click="pauseGame = false">Continue Game</button>
             <button @click="choosing=true">Change Background</button>
@@ -19,13 +19,13 @@ import bgChoice from '@/components/bgChoice.vue'
 
 const bgs = ref([{
     name: 'city',
-    img: '@/assets/bgArt.png'
+    img: './src/assets/bgArt.png'
 },{
     name: 'standby',
-    img: '@/assets/bgArt2.png'
+    img: './src/assets/bgArt2.png'
 },{
     name: 'void',
-    img: '@/assets/bgArt1.png'
+    img: './src/assets/bgArt1.png'
 }])
 
 const score = ref(0);
@@ -36,10 +36,12 @@ const jumping = ref(false);
 const choosing =ref(false);
 const pauseGame = ref(false);
 
+const background = ref('@/assets/bgArt.png');
+
 const currentFrame = ref(run1);
 const running = ref(true);
 
-// async function start(){
+// async function jump(){
 //     jumping = true
 //     for(let i = 5; i <= 5; i++){
 //         document.querySelectorAll(".player").style.transform = "translateY(1%)";
@@ -102,26 +104,22 @@ const running = ref(true);
 
 <style scoped>
 .cone{
-    right: -5%;
-    bottom: 20%;
-    width: 2%;
-}
-.pauseFocus{
-    background-color: #000000;
-    opacity: 25%;
+    right: -5vh;
+    bottom: 20vh;
+    width: 2vh;
 }
 .bg{
-    width: 100%;
-    height: 56.25%;
+    width: 100vh;
+    height: 56.25vh;
     image-rendering: pixelated;
-    background-image: url("@/assets/bgArt.png");
+    background-image: url("./src/assets/bgArt.png");
     background-size: cover;
 }
 
 .player{
     background-color: antiquewhite;
-    width: 10%;
-    height:10%;
+    width: 10vh;
+    height:10vh;
     background-size: cover;
     image-rendering: pixelated;
 }

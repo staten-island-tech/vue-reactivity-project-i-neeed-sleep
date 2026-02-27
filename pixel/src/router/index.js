@@ -1,5 +1,6 @@
 import HomeScreen from '@/views/homeScreen.vue'
 import jumpGame from '@/views/jumpGame.vue'
+import TestBgCh from '@/views/testBgCh.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 
@@ -15,6 +16,11 @@ const routes = createRouter({
       path:'/game',
       name:"game",
       component: jumpGame,
+    },
+    {
+      path:'/tst',
+      name:"tst",
+      component: TestBgCh,
     },
   ],
 })
