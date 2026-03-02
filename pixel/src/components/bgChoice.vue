@@ -2,7 +2,6 @@
     <div>
         <img :src="bg.img">
         <h2>{{ bg.name }}</h2>
-        <slot></slot>
     </div>
 </template>
 

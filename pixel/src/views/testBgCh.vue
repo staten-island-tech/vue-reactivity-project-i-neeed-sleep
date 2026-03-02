@@ -1,12 +1,10 @@
 <template>
-<div class="ee"><img :src="c">
+<div class="ee"><div class="c" :style="{backgroundImage:current}"></div>
     <br><br>
     <button @click="choosing=true">Change Background</button>
     <br><br>
     <div v-if="choosing"> 
-        <bgChoice @click="cc(bg)" v-for="bg in bgs" :key="bg.img" :bg="bg">
-            <button>e</button>
-        </bgChoice>
+        <bgChoice @click="cc(bg)" v-for="bg in bgs" :key="bg.img" :bg="bg"></bgChoice>
     </div>
 </div>
 
@@ -16,10 +14,10 @@
 import {ref} from 'vue'
 import bgChoice from '@/components/bgChoice.vue'
 const choosing = ref(false)
-const c = ref('./src/assets/bgArt.png')
+const current = ref('./src/assets/bgArt.png')
 
 function cc(bg){
-    c = bg;
+    current = bg.img;
 }
 
 const bgs = ref([{
@@ -41,5 +39,11 @@ div{
 .ee{
     background-color: #897070;
     min-height: 100vh;
+}
+.c{
+    background-image: url();
+    image-rendering: pixelated;
+    width: 160px;
+    height: 90px;
 }
 </style>
