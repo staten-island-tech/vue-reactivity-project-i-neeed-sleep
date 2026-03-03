@@ -18,14 +18,14 @@ h1{
     font-weight: 400;
     font-style: normal;
     text-align: center;
-    font-size: 200px;
+    font-size: 200;
     color: #EACDC2;
     position: static;
 }
 button{
     font-family: "Jersey 10", sans-serif;
     font-weight: 200;
-    font-size: 100px;
+    font-size: 100;
     font-style: normal;
     text-align: center;
     color: #FFC15E;
