@@ -1,10 +1,10 @@
 <template>
-    <div class="bg-screen">
-        <div class="player-sprite" @keydown.space=jump>
+    <div class="bg-screen" @keydown.esc.exact="pauseGame = true" >
+        <div class="player-sprite" :style="{backgroundImage:currentFrame}" @keyup.space.exact="jump">
             
         </div>
         <div class="cone-obstacle"></div>
-        <div @keydown.esc="pauseGame = true" v-if="pauseGame">
+        <div v-if="pauseGame">
             <button @click="pauseGame = false">Continue Game</button>
             <button @click="choosing=true">Change Background</button>
             <div class ="pause-menu" v-if="choosing"> 
@@ -23,7 +23,6 @@ import run3 from '@/assets/run3.png'
 import bgArt from '@/assets/bgArt.png'
 import bgArt1 from '@/assets/bgArt1.png'
 import bgArt2 from '@/assets/bgArt2.png'
-import { f } from 'vue-router/dist/index-Cu9B0wDz.mjs'
 
 //BACKGROUND STUFF
 const bgs = ref([{
@@ -43,12 +42,11 @@ const pauseGame = ref(false);
 const background = ref(bgArt);
 
 function changeBg(bg){
-    background = bg.img;
+    background.value = bg.img;
 }
 
 //SPAWN
 const playing = ref(true);
-const jumping = ref(false);
 const score = ref(0);
 const hiScore = ref(0);
 
@@ -90,17 +88,18 @@ const currentFrame = ref(run1);
 const running = ref(true);
 
 async function animation() {
-    currentImage.value = run1;
+    currentFrame.value = run1;
     await delay(500);
-    currentImage.value = run2;
+    currentFrame.value = run2;
     await delay(250);
-    currentImage.value = run3;
+    currentFrame.value = run3;
     await delay(500);
-    currentImage.value = run2;
+    currentFrame.value = run2;
     await delay(250);
 }
 
 // GAME MOVEMENT
+const jumping = ref(false);
 async function jump(){
     jumping = true
     for(let i = 5; i <= 5; i++){
@@ -118,24 +117,24 @@ async function jump(){
 
 <style scoped>
 .game-obstacle{
-    right: -5vh;
-    bottom: 20vh;
-    width: 2vh;
+    right: -5vw;
+    bottom: 10vw;
+    width: 2vw;
 }
 .bg-screen{
-    width: 100vh;
-    height: 56.25vh;
+    width: 100vw;
+    height: 56.25vw;
     image-rendering: pixelated;
     background-image: url("./src/assets/bgArt.png");
     background-size: cover;
 }
 
 .player-sprite{
-    background-color: antiquewhite;
-    width: 10vh;
-    height:10vh;
+    width: 10vw;
+    height:10vw;
     background-size: cover;
     image-rendering: pixelated;
+    
 }
 
 h1{

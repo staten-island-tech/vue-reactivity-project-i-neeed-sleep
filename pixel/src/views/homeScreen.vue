@@ -6,7 +6,6 @@
     <div>
         <h1>Run For It</h1>
         <RouterLink to="/game"><button> Start </button></RouterLink>
-        <br>
     </div>
 </template>
 
@@ -18,28 +17,29 @@ h1{
     font-weight: 400;
     font-style: normal;
     text-align: center;
-    font-size: 200;
-    color: #EACDC2;
-    position: static;
+    font-size: 20vh;
+    color: #eac2c2;
+    transform: translateY(-15vw);
 }
 button{
     font-family: "Jersey 10", sans-serif;
     font-weight: 200;
-    font-size: 100;
+    font-size: 10vh;
     font-style: normal;
     text-align: center;
     color: #FFC15E;
     border: none;
     background-color: #1A1423;
-    position: static;
-    align-self: center;
+    width: 30vw;
+
 }
 div{
     background-image: url("@/assets/bgArt.png");
     background-size:cover;
     image-rendering:pixelated;
-    width:100%;
-    height:56.25%;
-    align-self: center;
+    width:100vw;
+    height:56.25vw;
+    display:flow-root;
+    justify-content: center;
 }
 </style>
