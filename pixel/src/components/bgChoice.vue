@@ -18,17 +18,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
 div{
     align-items: center;
-    max-width: 30vh;
+    max-width: 20vw;
     background-color: #372549;
-    margin: 5vh;
-    padding: 2vh;
+    margin: 5vw;
+    padding: 2vw;
 }
 h2{
     font-family: "Jersey 10", sans-serif;
-    font-weight: 20px;
+    font-weight: 20;
     font-style: normal;
     text-align: center;
-    font-size: 60px;
+    font-size: 6vw;
     color: #EACDC2;
 }
 img{

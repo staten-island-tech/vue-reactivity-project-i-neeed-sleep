@@ -1,21 +1,22 @@
 <template>
-    <div class="bg-screen" @keydown.esc.exact="pauseGame = true" >
+    <div class="bg-screen" :style="displayBg">
+        <button @click="pauseGame = true, playing = false" class="pause-button" v-if="playing">Pause</button>
         <div class="player-sprite" :style="{backgroundImage:currentFrame}" @keyup.space.exact="jump">
             
         </div>
         <div class="cone-obstacle"></div>
-        <div v-if="pauseGame">
-            <button @click="pauseGame = false">Continue Game</button>
-            <button @click="choosing=true">Change Background</button>
-            <div class ="pause-menu" v-if="choosing"> 
-                <bgChoice @click="changeBg(bg)" v-for="bg in bgs" :key="bg.img" :bg="bg"></bgChoice>
-            </div>
+        <div v-if="pauseGame" class ="pause-menu">
+            <button class="pause-menu_button" @click="pauseGame = false, playing = true">Continue Game</button><br><br>
+            <button class="pause-menu_button" @click="choosing=true">Change Background</button>
+        </div>
+        <div class ="pause-menu" v-if="choosing"> 
+            <bgChoice @click="changeBg(bg)" v-for="bg in bgs" :key="bg.img" :bg="bg"></bgChoice>
         </div>
     </div>
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
 import bgChoice from '@/components/bgChoice.vue'
 import run1 from '@/assets/run1.png'
 import run2 from '@/assets/run2.png'
@@ -41,6 +42,10 @@ const pauseGame = ref(false);
 
 const background = ref(bgArt);
 
+function displayBg(){
+    // use computed prop
+}
+
 function changeBg(bg){
     background.value = bg.img;
 }
@@ -49,6 +54,7 @@ function changeBg(bg){
 const playing = ref(true);
 const score = ref(0);
 const hiScore = ref(0);
+const dead = ref(false);
 
 async function scoree() {
     await delay(700);
@@ -125,7 +131,6 @@ async function jump(){
     width: 100vw;
     height: 56.25vw;
     image-rendering: pixelated;
-    background-image: url("./src/assets/bgArt.png");
     background-size: cover;
 }
 
@@ -142,19 +147,38 @@ h1{
     font-weight: 400;
     font-style: normal;
     text-align: center;
-    font-size: 80;
+    font-size: 8vh;
     color: #EACDC2;
 }
-button{
+.pause-menu_button{
     font-family: "Jersey 10", sans-serif;
     font-weight: 200;
     font-style: normal;
     text-align: center;
-    font-size: 80;
+    font-size: 5vh;
     color: #FFC15E;
     border: none;
     background-color: #1A1423;
     align-self: center;
-    width: 10%;
+    width: 50%;
+}
+.pause-button{
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+    text-align: center;
+    font-size: 3vw;
+    color: #FFC15E;
+    border: none;
+    background-color: #1A1423;
+    align-self: center;
+    height: 4vw;
+}
+.pause-menu{
+    width: 100vw;
+    height: 56.25vw;
+    background-color: #00000080;
+    position: absolute;
+
 }
 </style>
