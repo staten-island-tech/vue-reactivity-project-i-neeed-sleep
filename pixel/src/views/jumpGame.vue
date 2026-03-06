@@ -1,16 +1,16 @@
 <template>
-    <div class="bg-screen" :style="displayBg">
+    <div class="bg-screen" :style="{backgroundImage:'url('+background+')'}">
         <button @click="pauseGame = true, playing = false" class="pause-button" v-if="playing">Pause</button>
-        <div class="player-sprite" :style="{backgroundImage:currentFrame}" @keyup.space.exact="jump">
+        <div class="player-sprite" :style="{backgroundImage:'url('+currentFrame+')'}" @keyup.space.exact="jump">
             
         </div>
         <div class="cone-obstacle"></div>
         <div v-if="pauseGame" class ="pause-menu">
-            <button class="pause-menu_button" @click="pauseGame = false, playing = true">Continue Game</button><br><br>
-            <button class="pause-menu_button" @click="choosing=true">Change Background</button>
+            <button class="pause-menu-button" @click="pauseGame = false, playing = true">Continue Game</button><br><br>
+            <button class="pause-menu-button" @click="choosing=true">Change Background</button>
         </div>
         <div class ="pause-menu" v-if="choosing"> 
-            <bgChoice @click="changeBg(bg)" v-for="bg in bgs" :key="bg.img" :bg="bg"></bgChoice>
+            <bgChoice @click="changeBg(bg),choosing=false" v-for="bg in bgs" :key="bg.img" :bg="bg"></bgChoice>
         </div>
     </div>
 </template>
@@ -42,9 +42,6 @@ const pauseGame = ref(false);
 
 const background = ref(bgArt);
 
-function displayBg(){
-    // use computed prop
-}
 
 function changeBg(bg){
     background.value = bg.img;
@@ -150,7 +147,7 @@ h1{
     font-size: 8vh;
     color: #EACDC2;
 }
-.pause-menu_button{
+.pause-menu-button{
     font-family: "Jersey 10", sans-serif;
     font-weight: 200;
     font-style: normal;
