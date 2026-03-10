@@ -1,9 +1,7 @@
 <template>
     <div class="bg-screen" :style="{backgroundImage:'url('+background+')'}">
         <button @click="pauseGame = true, playing = false" class="pause-button" v-if="playing">Pause</button>
-        <div class="player-sprite" :style="{backgroundImage:'url('+currentFrame+')'}" @keyup.space.exact="jump">
-            
-        </div>
+        <div class="player-sprite"></div>
         <div class="cone-obstacle"></div>
         <div v-if="pauseGame" class ="pause-menu">
             <button class="pause-menu-button" @click="pauseGame = false, playing = true">Continue Game</button><br><br>
@@ -24,6 +22,7 @@ import run3 from '@/assets/run3.png'
 import bgArt from '@/assets/bgArt.png'
 import bgArt1 from '@/assets/bgArt1.png'
 import bgArt2 from '@/assets/bgArt2.png'
+import cone from '@/assets/cone.png'
 
 //BACKGROUND STUFF
 const bgs = ref([{
