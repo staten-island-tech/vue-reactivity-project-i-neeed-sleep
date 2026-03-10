@@ -16,13 +16,6 @@
 <script setup>
 import {ref, computed} from 'vue'
 import bgChoice from '@/components/bgChoice.vue'
-import run1 from '@/assets/run1.png'
-import run2 from '@/assets/run2.png'
-import run3 from '@/assets/run3.png'
-import bgArt from '@/assets/bgArt.png'
-import bgArt1 from '@/assets/bgArt1.png'
-import bgArt2 from '@/assets/bgArt2.png'
-import cone from '@/assets/cone.png'
 
 //BACKGROUND STUFF
 const bgs = ref([{
@@ -47,27 +40,27 @@ function changeBg(bg){
 }
 
 //SPAWN
-const playing = ref(true);
-const score = ref(0);
-const hiScore = ref(0);
-const dead = ref(false);
+// const playing = ref(true);
+// const score = ref(0);
+// const hiScore = ref(0);
+// const dead = ref(false);
 
-async function scoree() {
-    await delay(700);
-    score ++
-}
+// async function scoree() {
+//     await delay(700);
+//     score ++
+// }
 
-async function spawnObstacle() {
-    await delay(2000 + Math.floor(Math.random()*2000))
-    document.querySelector(".bg-screen").insertAdjacentHTML('beforeend', `
-        <div :class = "game-obstacle"></div>
-    `)
-}
+// async function spawnObstacle() {
+//     await delay(2000 + Math.floor(Math.random()*2000))
+//     document.querySelector(".bg-screen").insertAdjacentHTML('beforeend', `
+//         <div :class = "game-obstacle"></div>
+//     `)
+// }
 
-async function obstacle(){
-    document.querySelectorAll(".game-obstacle").style.transform = "translateX(-1%)";
-    await delay(25);
-}
+// async function obstacle(){
+//     document.querySelectorAll(".game-obstacle").style.transform = "translateX(-1%)";
+//     await delay(25);
+// }
 
 // while(playing===true && pauseGame===false){
 //     scoree();
@@ -86,34 +79,23 @@ async function obstacle(){
 // }
 
 // ANIMATION
-const currentFrame = ref(run1);
-const running = ref(true);
 
-async function animation() {
-    currentFrame.value = run1;
-    await delay(500);
-    currentFrame.value = run2;
-    await delay(250);
-    currentFrame.value = run3;
-    await delay(500);
-    currentFrame.value = run2;
-    await delay(250);
-}
 
 // GAME MOVEMENT
-const jumping = ref(false);
-async function jump(){
-    jumping = true
-    for(let i = 5; i <= 5; i++){
-        document.querySelectorAll(".player").style.transform = "translateY(1%)";
-        await delay(25);
-    } 
-    for(let i = 5; i <= 5; i++){
-        document.querySelectorAll(".player").style.transform = "translateY(-1%)";
-        await delay(25);
-    }
-    jumping = false 
-}
+
+// const jumping = ref(false);
+// async function jump(){
+//     jumping = true
+//     for(let i = 5; i <= 5; i++){
+//         document.querySelectorAll(".player").style.transform = "translateY(1%)";
+//         await delay(25);
+//     } 
+//     for(let i = 5; i <= 5; i++){
+//         document.querySelectorAll(".player").style.transform = "translateY(-1%)";
+//         await delay(25);
+//     }
+//     jumping = false 
+// }
 
 </script>
 
