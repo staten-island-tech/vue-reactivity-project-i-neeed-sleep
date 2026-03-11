@@ -28,8 +28,8 @@ export default {
         },
         endGame() {
             const endTime = new Date().getTime();
-            this.currentScore = ((endTime - this.startTime) / 200).toFixed(0);
             clearTimeout(this.timer);
+            this.currentScore = Math.floor((endTime - this.startTime) / 200);
             this.isPlaying = false;
             this.checkHighScore();
         },

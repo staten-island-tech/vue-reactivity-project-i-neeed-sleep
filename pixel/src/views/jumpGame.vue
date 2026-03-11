@@ -92,6 +92,16 @@ function change(){
     }
 }
 
+function pausing(){
+    if (pauseGame===true){
+        action.value = 'paused-sprite';
+    }
+    if (pauseGame===false){
+        action.value = 'running-sprite'
+    }
+}
+
+
 // GAME MOVEMENT
 
 // const jumping = ref(false);
@@ -185,7 +195,7 @@ h1{
     animation-duration: 0s;
 }
 .paused-sprite{
-    animation-play-state: paused;
+    animation-duration: 0s;
 }
 @keyframes jump {
     from {background-position: 0vw}
