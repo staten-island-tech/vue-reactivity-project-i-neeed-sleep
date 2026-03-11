@@ -1,6 +1,5 @@
 <template>
     <div>Score: {{ currentScore }}</div>
-    <div>High Score: {{ highScore }}</div>
 </template>
 
 <script>

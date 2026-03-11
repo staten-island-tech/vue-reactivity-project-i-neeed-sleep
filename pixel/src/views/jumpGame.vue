@@ -1,6 +1,7 @@
 <template>
     <div class="bg-screen" :style="{backgroundImage:'url('+background+')'}">
         <button @click="pauseGame = true, playing = false" class="pause-button" v-if="playing">Pause</button>
+        <div class="player-sprite" :class="action"></div>
         <div v-if="pauseGame" class ="pause-menu">
             <button class="pause-menu-button" @click="pauseGame = false, playing = true">Continue Game</button><br><br>
             <button class="pause-menu-button" @click="choosing=true">Change Background</button>
@@ -81,6 +82,15 @@ function changeBg(bg){
 
 // ANIMATION
 
+const action = ref('running-sprite');
+
+function change(){
+    if(action.value === 'running-sprite'){
+       action.value = 'jumping-sprite';
+    } else{
+        action.value = 'running-sprite';
+    }
+}
 
 // GAME MOVEMENT
 
@@ -112,13 +122,6 @@ function changeBg(bg){
     image-rendering: pixelated;
     background-size: cover;
     position: absolute;
-}
-
-.player-sprite{
-    width: 10vw;
-    height:10vw;
-    background-size: cover;
-    image-rendering: pixelated;
 }
 
 h1{
@@ -163,5 +166,33 @@ h1{
     height: 56.25vw;
     background-color: #00000080;
     position: absolute;
+}
+
+.player-sprite{
+    position: absolute;
+    top: 55%;
+    left: 2%;
+    height: 20vw;
+    width: 20vw;
+    background-size: cover;
+    background-image: url(@/assets/spriteSheet.png);
+    image-rendering: pixelated;
+}
+.running-sprite{
+    animation: run 0.9s steps(4) infinite;
+}
+.jumping-sprite{
+    animation-duration: 0s;
+}
+.paused-sprite{
+    animation-play-state: paused;
+}
+@keyframes jump {
+    from {background-position: 0vw}
+    to {background-position: 0vw;}
+}
+@keyframes run {
+    from {background-position: 20vw}
+    to {background-position: 100vw;}
 }
 </style>
