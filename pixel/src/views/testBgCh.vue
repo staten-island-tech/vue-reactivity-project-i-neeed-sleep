@@ -1,52 +1,44 @@
 <template>
-    <div class="space">
-        <div class="game-obstacle"><img :src="cone"></div>
-    </div>
-    <button @click="start=true">start</button>
+    <div>Score: {{ currentScore }}</div>
+    <div>High Score: {{ highScore }}</div>
+    <button @click="endGame">end</button>
+    <button @click="startGame">start</button>
 </template>
 
-<script setup>
-import {ref} from 'vue'
-import cone from '@/assets/cone.png'
-
-const start = ref(false);
-
-
-
-
-// const cone = document.querySelectorAll(".game-obstacle").style.left;
-// function ee(){
-//     setTimeout(()=>{
-//         let funn = cone.value -'vw'
-//         cone.style.left= funn -1 +'vw';
-//     }, 25)
-// }
-
-if(start){
-    ee();
-}
-
-// if (running){
-//     animation()
-// }
+<script>
+export default {
+    data() {
+        return {
+            isPlaying: false,
+            startTime: null,
+            currentScore: 0,
+            highScore: 0,
+        };
+    },
+    methods: {
+        startGame() {
+            this.isPlaying = true;
+            this.startTime = new Date().getTime();
+            this.currentScore = 0;
+            this.timer = setInterval(() => {
+                this.currentScore = Math.floor((Date.now() - this.startTime) / 400);
+            }, 200);
+        },
+        endGame() {
+            const endTime = new Date().getTime();
+            this.currentScore = ((endTime - this.startTime) / 1000).toFixed(0);
+            this.isPlaying = false;
+            this.checkHighScore();
+        },
+        checkHighScore() {
+            if (this.currentScore < this.highScore) {
+                    this.highScore = this.currentScore;
+            }
+        },
+    },
+};
 </script>
 
 <style scoped>
-img{
-    height: fit-content;
-    width: fit-content;
-    image-rendering: pixelated;
-}
-.game-obstacle{
-    height: 10vw;
-    width: 10vw;
-    position:relative;
-    top: 30vw;
-    left: 90vw;
-}
-.space {
-    width: 100vw;
-    height: 40vw;
-    background-color: #006134;
-}
+
 </style>

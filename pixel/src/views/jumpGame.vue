@@ -1,21 +1,22 @@
 <template>
     <div class="bg-screen" :style="{backgroundImage:'url('+background+')'}">
         <button @click="pauseGame = true, playing = false" class="pause-button" v-if="playing">Pause</button>
-        <div class="player-sprite"></div>
-        <div class="cone-obstacle"></div>
         <div v-if="pauseGame" class ="pause-menu">
             <button class="pause-menu-button" @click="pauseGame = false, playing = true">Continue Game</button><br><br>
             <button class="pause-menu-button" @click="choosing=true">Change Background</button>
         </div>
-        <div class ="pause-menu" v-if="choosing"> 
+        <div class ="pause-menu" style="display:inline-flex" v-if="choosing"> 
             <bgChoice @click="changeBg(bg),choosing=false" v-for="bg in bgs" :key="bg.img" :bg="bg"></bgChoice>
         </div>
     </div>
 </template>
 
 <script setup>
-import {ref, computed} from 'vue'
+import {ref} from 'vue'
 import bgChoice from '@/components/bgChoice.vue'
+import bgArt from '@/assets/bgArt.png'
+import bgArt1 from '@/assets/bgArt1.png'
+import bgArt2 from '@/assets/bgArt2.png'
 
 //BACKGROUND STUFF
 const bgs = ref([{
@@ -33,6 +34,7 @@ const choosing =ref(false);
 const pauseGame = ref(false);
 
 const background = ref(bgArt);
+const playing = ref(true);
 
 
 function changeBg(bg){
@@ -40,7 +42,6 @@ function changeBg(bg){
 }
 
 //SPAWN
-// const playing = ref(true);
 // const score = ref(0);
 // const hiScore = ref(0);
 // const dead = ref(false);
@@ -110,6 +111,7 @@ function changeBg(bg){
     height: 56.25vw;
     image-rendering: pixelated;
     background-size: cover;
+    position: absolute;
 }
 
 .player-sprite{
@@ -117,7 +119,6 @@ function changeBg(bg){
     height:10vw;
     background-size: cover;
     image-rendering: pixelated;
-    
 }
 
 h1{
@@ -127,18 +128,22 @@ h1{
     text-align: center;
     font-size: 8vh;
     color: #EACDC2;
+    position: absolute;
 }
 .pause-menu-button{
     font-family: "Jersey 10", sans-serif;
     font-weight: 200;
     font-style: normal;
     text-align: center;
-    font-size: 5vh;
+    font-size: 5vw;
     color: #FFC15E;
     border: none;
     background-color: #1A1423;
     align-self: center;
     width: 50%;
+    position: relative;
+    top: 50%;
+    left: 25%;
 }
 .pause-button{
     font-family: "Jersey 10", sans-serif;
@@ -151,12 +156,12 @@ h1{
     background-color: #1A1423;
     align-self: center;
     height: 4vw;
+    width: 8vw;
 }
 .pause-menu{
     width: 100vw;
     height: 56.25vw;
     background-color: #00000080;
     position: absolute;
-
 }
 </style>

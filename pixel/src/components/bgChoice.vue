@@ -19,6 +19,7 @@
 div{
     align-items: center;
     max-width: 20vw;
+    max-height: 30vw;
     background-color: #372549;
     margin: 5vw;
     padding: 2vw;
