@@ -18,8 +18,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
 div{
     align-items: center;
-    max-width: 20vw;
-    max-height: 30vw;
+    width: 20vw;
+    height: 25vw;
     background-color: #372549;
     margin: 5vw;
     padding: 2vw;
@@ -29,7 +29,7 @@ h2{
     font-weight: 20;
     font-style: normal;
     text-align: center;
-    font-size: 6vw;
+    font-size: 5vw;
     color: #EACDC2;
 }
 img{

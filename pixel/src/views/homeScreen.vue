@@ -12,15 +12,20 @@
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
 
+*{
+    left: 10vw;
+}
 h1{
     font-family: "Jersey 10", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 20vw;
-    color: #eac2c2;
+    font-size: 15vw;
+    text-align: center;
+    color: #EACDC2;
     position: absolute;
-    left: 20vw;
+    left: 10vw;
     bottom: 20vw;
+    width:60vw;
 }
 button{
     font-family: "Jersey 10", sans-serif;
@@ -33,15 +38,15 @@ button{
     background-color: #1A1423;
     width: 30vw;
     position: absolute;
-    left: 35vw;
+    left: 25vw;
     bottom: 10vw;
 }
 div{
     background-image: url("@/assets/bgArt.png");
     background-size:cover;
     image-rendering:pixelated;
-    width:100vw;
-    height:56.25vw;
+    width: 80vw;
+    height: 45vw;
     display:flow-root;
     justify-content: center;
     position: absolute;

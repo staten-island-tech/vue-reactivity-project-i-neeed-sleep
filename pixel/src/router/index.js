@@ -1,6 +1,5 @@
 import HomeScreen from '@/views/homeScreen.vue'
 import jumpGame from '@/views/jumpGame.vue'
-import TestAnimation from '@/views/testAnimation.vue'
 import TestBgCh from '@/views/testBgCh.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -22,11 +21,6 @@ const routes = createRouter({
       path:'/tst',
       name:"tst",
       component: TestBgCh,
-    },
-    {
-      path:'/tstAA',
-      name:"tstAA",
-      component: TestAnimation,
     },
   ],
 })

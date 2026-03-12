@@ -1,43 +1,44 @@
 <template>
-    <div>Score: {{ currentScore }}</div>
-    <div>High Score: {{ highScore }}</div>
+        <div id="player-sprite" :class="action"></div>
+<button @click="change()">e</button>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-            isPlaying: false,
-            startTime: null,
-            currentScore: 0,
-            highScore: 0,
-        };
-    },
-    methods: {
-        startGame() {
-            this.isPlaying = true;
-            this.startTime = new Date().getTime();
-            this.timer = setInterval(() => {
-                this.currentScore = Math.floor((Date.now() - this.startTime) / 200);
-            }, 200);
-            this.currentScore = 0;
-        },
-        checkHighScore() {
-            while (this.currentScore > this.highScore) {
-                this.highScore = this.currentScore;
-            }
-        },
-        endGame() {
-            const endTime = new Date().getTime();
-            this.currentScore = ((endTime - this.startTime) / 200).toFixed(0);
-            clearTimeout(this.timer);
-            this.isPlaying = false;
-            this.checkHighScore();
-        },
-    },
-};
+<script setup>
+import { ref } from 'vue';
+
+const action = ref('running-sprite');
+
+function change(){
+    action.value = 'paused-sprite'
+}
 </script>
 
 <style scoped>
-
+#player-sprite{
+    position: absolute;
+    top: 23vw;
+    left: 2vw;
+    height: 18vw;
+    width: 18vw;
+    background-size: cover;
+    background-image: url(@/assets/spriteSheet.png);
+    image-rendering: pixelated;
+}
+.running-sprite{
+    animation: run 0.8s steps(4) infinite;
+}
+.jumping-sprite{
+    animation-play-state: paused;
+}
+.paused-sprite{
+    animation-play-state: paused;
+}
+@keyframes jump {
+    from {background-position: 0vw}
+    to {background-position: 0vw;}
+}
+@keyframes run {
+    from {background-position: 18vw}
+    to {background-position: 90vw;}
+}
 </style>
