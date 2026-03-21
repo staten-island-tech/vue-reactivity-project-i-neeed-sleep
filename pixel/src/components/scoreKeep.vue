@@ -1,5 +1,5 @@
 <template>
-    <div>Score: {{ currentScore }}</div>
+    <div>HISCORE: {{ highScore }} SCORE: {{ currentScore }}</div>
 </template>
 
 <script>
@@ -11,9 +11,6 @@ export default {
             highScore: 0,
             remainTime:0,
         };
-    },
-    mounted(){
-        this.startGame();
     },
     methods: {
         startGame() {
@@ -38,7 +35,10 @@ export default {
             this.checkHighScore();
             this.currentScore = 0;
             this.remainTime = 0;
-        },
+            },
+    },
+    mounted(){
+        this.startGame();
     },
 };
 </script>
@@ -56,5 +56,6 @@ div{
     top:0;
     right:0;
     color: #EACDC2;
+    display: flex;
 }
 </style>

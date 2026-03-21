@@ -1,11 +1,14 @@
 <template>
-    <div class="bg-screen" :style="{backgroundImage:'url('+background+')'}">
-        <button @click="pauseGame = true, playing = false, pPause(),gamePause()" class="pause-button" v-if="playing">Pause</button>
+    <div class="bg-screen" @click="playerJump" :style="{backgroundImage:'url('+background+')'}">
+        <button @click="gamePause()" class="pause-button" v-if="playing">Pause</button>
         <div class="game-score"><scoreKeep ref="keepScore"></scoreKeep></div>
-        <div id="player-sprite" :class="action"></div>
+        <div v-for="obstacle in obstacles" :key="obstacle.id"
+        class="obstacle" :style="{ left: obstacle.left + 'vw' }" ref="obstacleRef => ">
+        </div>
+        <div id="player-sprite" :class="action" ref="playerRef"></div>
         <div v-if="pauseGame" class ="pause-menu">
             <h1>Game Paused</h1>
-            <button class="outgame-menu-button" @click="pauseGame = false, playing = true, pUnpause(),gameStart()">Continue Game</button><br><br>
+            <button class="outgame-menu-button" @click="gameUnpause()">Continue Game</button><br><br>
             <button class="outgame-menu-button" @click="choosing=true">Change Background</button>
         </div>
         <div class ="pause-menu" style="display:inline-flex" v-if="choosing"> 
@@ -13,14 +16,14 @@
         </div>
 
         <div class="death-screen" v-if="playerDead">
-            <h1>High Score:{{ hiScore }}</h1>
-            <button @click="playing=true,playerDead=false, gameStart()" class="outgame-menu-button">Restart</button>
+            <h1>High Score:{{ highScore }}</h1>
+            <button @click="gameRestart()" class="outgame-menu-button">Restart</button>
         </div>
     </div>
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {onMounted, ref} from 'vue'
 import bgChoice from '@/components/bgChoice.vue'
 import bgArt from '@/assets/bgArt.png'
 import bgArt1 from '@/assets/bgArt1.png'
@@ -52,98 +55,145 @@ function changeBg(bg){
 
 //SPAWN
 const keepScore = ref(null);
-const hiScore = ref(null);
+const playerDead = ref(false);
 
-function gameStart (){
+function scoreStart (){
     if(keepScore.value){
         keepScore.value.startGame()
     }
 }
 
-function gamePause(){
+function scorePause(){
     if(keepScore.value){
         keepScore.value.pauseGame()
     }
 }
 
-
-const playerDead = ref(false);
-// async function spawnObstacle() {
-//     await delay(2000 + Math.floor(Math.random()*2000))
-//     document.querySelector(".bg-screen").insertAdjacentHTML('beforeend', `
-//         <div :class = "game-obstacle"></div>
-//     `)
-// }
-
-// async function obstacle(){
-//     document.querySelectorAll(".game-obstacle").style.transform = "translateX(-1%)";
-//     await delay(25);
-// }
-
-// while(playing===true && pauseGame===false){
-//     scoree();
-//     spawnObstacle();
-//     obstacle()
-//     while(jumping=false){
-//         animation();
-//     }
-// }
-
-
-// if (playing===false){
-//     if(score > hiScore){
-//         hiScore = score
-//     }
-//     score = 0
-// }
-
-
-
-
-// GAME MOVEMENT
-
-const jumping = ref(false);
-// async function jump(){
-//     jumping = true
-//     for(let i = 5; i <= 5; i++){
-//         document.querySelectorAll(".player").style.transform = "translateY(1%)";
-//         await delay(25);
-//     } 
-//     for(let i = 5; i <= 5; i++){
-//         document.querySelectorAll(".player").style.transform = "translateY(-1%)";
-//         await delay(25);
-//     }
-//     jumping = false 
-// }
-
-// ANIMATION
-
-const action = ref('running-sprite');
-
-function pJump(){
-    if(action.value === 'running-sprite'){
-       action.value = 'jumping-sprite';
-    } else{
-        action.value = 'running-sprite';
+function scoreDeath(){
+    if(keepScore.value){
+        keepScore.value.endGame()
     }
 }
-function pPause(){
+
+// ANIMATION
+const action = ref('running-sprite');
+
+
+function playerPause(){
     action.value = 'paused-sprite';
 }
 
-function pUnpause(){
+function playerUnpause(){
     action.value = 'running-sprite';
 }
+
+function playerJump(){
+    if(pauseGame.value===false){
+        action.value = 'jumping-sprite';
+        setTimeout(() => {
+            action.value = 'running-sprite';
+        }, 1200);
+    }
+}
+//GAME STUFF
+const obstacles = ref([]);
+const spawnLoop = ref(null)
+const obstacleMovement = ref(null)
+const collisionCheck = ref(null)
+
+const playerRef = ref(null);
+
+function checkCollision() {
+    const spriteColl = playerRef.value.getBoundingClientRect();
+    const obstacleColl = obstacles.value.forEach(obs=>obs.getBoundingClientRect()); 
+    
+    if(){
+        gameDeath();
+    }
+}
+
+
+onMounted(() => {
+    spawnLoop.value = setInterval(()=>{obstacles.value.push({
+        id: Date.now(),
+        left: 80,
+    });}, 3000);
+    obstacleMovement.value = setInterval(() => {
+        obstacles.value.forEach(obs => obs.left-=4);
+        obstacles.value = obstacles.value.filter(obs => obs.left>-10);
+    }, 80);
+    collisionCheck.value = setInterval(checkCollision(),40);
+    document.addEventListener('keydown', (event)=>{
+        event.preventDefault();
+        if (event.code === 'Space' || event.key === 'ArrowUp'){
+            playerJump()
+        }
+    });
+});
+
+function stopObstacles (){
+    clearTimeout(obstacleMovement.value);
+    clearTimeout(spawnLoop.value);
+    clearTimeout(collisionCheck.value);
+}
+function unpauseObstacles (){ 
+    spawnLoop.value = setInterval(()=>{obstacles.value.push({
+        id: Date.now(),
+        left: 80,
+    });}, 3000);
+    collisionCheck.value = setInterval(checkCollision(),40);
+    obstacleMovement.value = setInterval(() => {
+        obstacles.value.forEach(obs => obs.left-=4);
+        obstacles.value = obstacles.value.filter(obs => obs.left>-10);
+    }, 100);
+}
+
+
+function gamePause(){
+    playerPause();
+    scorePause();
+    stopObstacles();
+    pauseGame.value = true;
+    playing.value = false;
+}
+
+function gameUnpause(){
+    playerUnpause();
+    scoreStart();
+    unpauseObstacles();
+    pauseGame.value = false;
+    playing.value = true;
+}
+
+function gameDeath(){
+    scoreDeath();
+    stopObstacles();
+    playerDead.value = true;
+    action.value = 'dead-sprite';
+}
+
+function gameRestart(){
+    scoreStart();
+    unpauseObstacles();
+    playerUnpause();
+    playerDead = false;
+}
+
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
 *{
     left: 10vw;
 }
-.game-obstacle{
-    right: -5vw;
-    bottom: 10vw;
-    width: 2vw;
+.obstacle{
+  position: absolute;
+  image-rendering: pixelated;
+  height: 8vw;
+  width: 8vw;
+  background-image: url(@/assets/cone.png);
+  background-size: cover;
+  top: 33vw;
 }
 .game-score{
     position: absolute;
@@ -213,7 +263,7 @@ h1{
 #player-sprite{
     position: absolute;
     top: 23vw;
-    left: 2vw;
+    left: 4vw;
     height: 18vw;
     width: 18vw;
     background-size: cover;
@@ -221,18 +271,25 @@ h1{
     image-rendering: pixelated;
 }
 .running-sprite{
-    animation: run 0.8s steps(4) infinite;
+    animation: run 1s steps(4) infinite;
 }
 .jumping-sprite{
-    animation-play-state: paused;
+    animation: jump 1.2s linear;
+    animation-delay: -0.1s;
+    background-position: 0vw;
 }
 .paused-sprite{
     animation-play-state: paused;
     background-position: 36vw;
 }
+.dead-sprite{
+    animation-play-state: paused;
+    background-image: url();
+}
 @keyframes jump {
-    from {background-position: 0vw}
-    to {background-position: 0vw;}
+    0% {top: 23vw}
+    40% {top: 3vw;}
+    100% {top: 23vw;}
 }
 @keyframes run {
     from {background-position: 18vw}
