@@ -44,9 +44,8 @@ const bgs = ref([{
 
 const choosing =ref(false);
 const pauseGame = ref(false);
-
-const background = ref(bgArt);
 const playing = ref(true);
+const background = ref(bgArt);
 
 
 function changeBg(bg){
@@ -103,11 +102,18 @@ const collisionCheck = ref(null)
 
 const playerRef = ref(null);
 
+function gameDeath(){
+    scoreDeath();
+    stopObstacles();
+    playerDead.value = true;
+    action.value = 'dead-sprite';
+}
+
 function checkCollision() {
     const spriteColl = playerRef.value.getBoundingClientRect();
     const obstacleColl = obstacles.value.forEach(obs=>obs.getBoundingClientRect()); 
     
-    if(){
+    if(obstacleColl.x >= spriteColl.x && obstacleColl.y <= Math(spriteColl.y+spriteColl.width)){
         gameDeath();
     }
 }
@@ -122,30 +128,30 @@ onMounted(() => {
         obstacles.value.forEach(obs => obs.left-=4);
         obstacles.value = obstacles.value.filter(obs => obs.left>-10);
     }, 80);
-    collisionCheck.value = setInterval(checkCollision(),40);
     document.addEventListener('keydown', (event)=>{
         event.preventDefault();
         if (event.code === 'Space' || event.key === 'ArrowUp'){
             playerJump()
         }
     });
+    collisionCheck.value = setInterval(checkCollision(),40);
 });
 
 function stopObstacles (){
     clearTimeout(obstacleMovement.value);
     clearTimeout(spawnLoop.value);
-    clearTimeout(collisionCheck.value);
+    // clearTimeout(collisionCheck.value);
 }
 function unpauseObstacles (){ 
     spawnLoop.value = setInterval(()=>{obstacles.value.push({
         id: Date.now(),
         left: 80,
     });}, 3000);
-    collisionCheck.value = setInterval(checkCollision(),40);
     obstacleMovement.value = setInterval(() => {
         obstacles.value.forEach(obs => obs.left-=4);
         obstacles.value = obstacles.value.filter(obs => obs.left>-10);
     }, 100);
+    collisionCheck.value = setInterval(checkCollision(),40);
 }
 
 
@@ -163,13 +169,6 @@ function gameUnpause(){
     unpauseObstacles();
     pauseGame.value = false;
     playing.value = true;
-}
-
-function gameDeath(){
-    scoreDeath();
-    stopObstacles();
-    playerDead.value = true;
-    action.value = 'dead-sprite';
 }
 
 function gameRestart(){
@@ -284,7 +283,7 @@ h1{
 }
 .dead-sprite{
     animation-play-state: paused;
-    background-image: url();
+    background-image: url(@/assets/ded.png);
 }
 @keyframes jump {
     0% {top: 23vw}
